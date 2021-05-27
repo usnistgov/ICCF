@@ -1,0 +1,7 @@
+{
+  "HTTP_PORT": 8087,
+  "url": "jdbc:mysql://192.168.56.102:3306/AV_2018_12_11_15_34_55?autoReconnect=true&useSSL=false",
+  "driver_class": "com.mysql.cj.jdbc.Driver",
+  "user": "root",
+  "password": "c2wt"
+}

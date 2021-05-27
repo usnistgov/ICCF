@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AV Federation Experiment</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+</script>
+</head>
+<link rel="stylesheet" type="text/css" href="canvas.css">
+<body>
+    <div class="jumbotron">
+        <h1 align="center">AV Federation Experiment</h1>
+        <p align="center">Drive Cycle from COA.</p>
+    </div>
+<canvas id="myCanvas" width="745" height="400"
+style="border:1px solid #000000;">
+</canvas>
+
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var image = new Image();
+image.src = 'http://www.ncsl.org/portals/1/ImageLibrary/Hero/AutonomousVehicles_Hero.jpg';
+
+ctx.drawImage(image,0,0,canvas.width,canvas.height);
+
+</script>
+<div class="container" role="main">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Interactions</h1>
+                <!-- <button class="pull-right btn btn-primary product-add" data-action="add" data-toggle="modal"
+                        data-target="#productModal">
+                    <span class="glyphicon glyphicon-plus"></span> Add a new interaction
+                </button> -->
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>entryId</th>
+                        <th>ID18B</th>
+                        <th>DataField</th>
+                  <!--       <th>Actions</th> -->
+                    </tr>
+                    </thead>
+                    <tbody id="content">
+                    <!-- filled using Ajax -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        load();
+
+    });
+    function load() {
+	    var dps=[];
+        $("#content").children().remove();
+        $.getJSON("/api/interactions", function (data) {
+            $.each(data, function (key, val) {
+                $("<tr><td>" + val.entryId + "</td><td>" + val.ID18B + "</td><td>" +
+                    + val.DataField + "</td>" +
+                    "</td>").appendTo("#content");
+                
+                dps.push({x: val.entryId , y: parseInt(val.DataField) });
+                
+            });
+            
+           
+
+    var chart = new CanvasJS.Chart("chartContainer",
+    	{  
+    	
+    	
+    	animationEnabled: true,
+    	theme: "light2",
+    	title:{
+    		text: "FTP 75 Drive Cycle"
+    	},
+    	axisX: {
+    		title: "time (in ms)",
+    	},
+    	axisY:{
+    		title: "speed (in mph)",
+
+    	},
+          data: [
+          {
+            type: "line",
+            dataPoints: dps
+          }
+          ]
+        });
+
+     chart.render();
+        
+        });
+        
+ }
+        
+</script>
+
+</body>
+</html>
