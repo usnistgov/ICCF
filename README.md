@@ -10,7 +10,7 @@ IoTCaP collects capabilities from different sensors in the context of a smart bu
 
 ## Runtime as viewed from the front end 
 
-![Image](https://i.imgur.com/MK5lmk8.png)
+![Image](https://i.imgur.com/c39RmJW.png)
 
 ## Status
 
